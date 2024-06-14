@@ -5,6 +5,12 @@
   --vt-c-white-mute: #f2f2f2;
   --vt-c-beige: #e9edc9ff;
 
+  --tea-green: #ccd5aeff;
+  --beige: #e9edc9ff;
+  --cornsilk: #fefae0ff;
+  --papaya-whip: #faedcdff;
+  --vt-c-buff: #d4a373ff;
+
   --vt-c-black: #181818;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
@@ -64,7 +70,7 @@
 body {
   min-height: 100vh;
   line-height: 1.6;
-  font-family:
+  /* font-family:
     Inter,
     -apple-system,
     BlinkMacSystemFont,
@@ -76,8 +82,9 @@ body {
     'Fira Sans',
     'Droid Sans',
     'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
   font-size: 15px;
+  font-family: 'General Sans', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -96,4 +103,7 @@ body {
 --cornsilk: hsla(52, 94%, 94%, 1);
 --papaya-whip: hsla(43, 82%, 89%, 1);
 --buff: hsla(30, 53%, 64%, 1)
+
+this palette is from 
+https://coolors.co/palette/ccd5ae-e9edc9-fefae0-faedcd-d4a373
  */
