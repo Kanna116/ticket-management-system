@@ -1,39 +1,85 @@
 <script setup>
 import { ref } from 'vue'
+import TicketMakerModal from '../components/TicketMakerModal.vue'
 
 const ticketsSetsData = ref([
   {
     id: 1,
-    name: 'Not started'
+    name: 'Not started',
+    tickets: [
+      {
+        id: 'ticket-1',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      }
+    ]
   },
   {
     id: 2,
-    name: 'In Progress'
+    name: 'In Progress',
+    tickets: [
+      {
+        id: 'ticket-2',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      }
+    ]
   },
   {
     id: 3,
-    name: 'Done'
+    name: 'Done',
+    tickets: []
   }
 ])
+
+// with this method I can get the event to store the transfer data, and ticket and current set name of ticket
+const onDragStart = (event, ticket, ticketSet) => {
+  event.dataTransfer.setData('ticket', JSON.stringify({ ticket, ticketSet }))
+}
+
+//this will add the droped item to the dropped set
+const onDrop = (event, targetSet) => {
+  const { ticket, ticketSet } = JSON.parse(event.dataTransfer.getData('ticket'))
+
+  //removing the item after droping from the current set
+  const source = ticketsSetsData.value.find((column) => column.name === ticketSet)
+  const ticketIndex = source.tickets.findIndex((item) => item.id === ticket.id)
+  source.tickets.splice(ticketIndex, 1)
+
+  //adding the item after droping from the different  set
+  const target = ticketsSetsData.value.find((column) => column.name === targetSet)
+  target.tickets.push(ticket)
+}
 </script>
+
 <template>
   <h1>Tickets</h1>
   <div class="main-ticket-holder">
-    <div v-for="ticketSet in ticketsSetsData" :key="ticketSet.id" class="specific-ticket-container">
+    <div
+      v-for="ticketSet in ticketsSetsData"
+      :key="ticketSet.id"
+      class="specific-ticket-container"
+      @dragover.prevent
+      @drop="onDrop($event, ticketSet.name)"
+    >
       <h3 class="ticket-container-title">{{ ticketSet.name }}</h3>
-      <div class="ticket-details" v-for="ticketSet in ticketsSetsData" :key="ticketSet.id">
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore
-          facilis accusamus ex rerum ullam temporibus et
-        </p>
+      <div
+        v-for="ticket in ticketSet.tickets"
+        :key="ticket.id"
+        class="ticket-details"
+        draggable="true"
+        @dragstart="onDragStart($event, ticket, ticketSet.name)"
+      >
+        <p>{{ ticket.content }}</p>
         <div class="ticket-tags">
-          <span>Enhancement</span>
-          <span>Bug</span>
+          <span v-for="tag in ticket.tags" :key="tag">{{ tag }}</span>
         </div>
-
-        <p class="ticket-id">ticket-1</p>
+        <p class="ticket-id">{{ ticket.id }}</p>
       </div>
     </div>
+    <TicketMakerModal />
   </div>
 </template>
 
@@ -42,7 +88,6 @@ const ticketsSetsData = ref([
   width: fit-content;
   min-width: 50vw;
   height: fit-content;
-  /* background-color: red; */
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -67,8 +112,6 @@ const ticketsSetsData = ref([
   left: 0;
   text-transform: uppercase;
   padding: 15px 20px;
-  /* border-bottom: 1px solid #00000050; */
-  /* background-color: #00000030; */
 }
 .ticket-details {
   width: 100%;
@@ -78,13 +121,16 @@ const ticketsSetsData = ref([
   border-radius: 5px;
   background: white;
   font-size: 12px;
-  cursor: pointer;
+  cursor: grab;
   margin-top: 10px;
 }
-.ticket-details:first-of-type{
-    margin-top: 0px;
+.ticket-details:active {
+  cursor: grabbing;
+  opacity: 0.8;
 }
-
+.ticket-details:first-of-type {
+  margin-top: 0px;
+}
 .ticket-tags {
   margin-top: 10px;
   display: flex;
@@ -99,9 +145,9 @@ const ticketsSetsData = ref([
   border: 0.5px solid #00000030;
   border-radius: 3px;
 }
-.ticket-id{
-    margin-top: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.ticket-id {
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 </style>
