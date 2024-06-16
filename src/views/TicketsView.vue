@@ -3,6 +3,7 @@ import { ref } from 'vue'
 // import TicketMakerModal from '../components/TicketMakerModal.vue'
 import NewTicketMaker from '../components/NewTicketMaker.vue'
 
+// const containerHovered = ref(false)
 const ticketsSetsData = ref([
   {
     id: 1,
@@ -32,7 +33,9 @@ const ticketsSetsData = ref([
           'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
         tags: ['Enhancement', 'Bug']
       }
-    ]
+    ],
+    ticketMakingForm: false,
+    containerHovered: false
   },
   {
     id: 2,
@@ -62,7 +65,9 @@ const ticketsSetsData = ref([
           'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
         tags: ['Enhancement', 'Bug']
       }
-    ]
+    ],
+    ticketMakingForm: false,
+    containerHovered: false
   },
   {
     id: 3,
@@ -92,7 +97,9 @@ const ticketsSetsData = ref([
           'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
         tags: ['Enhancement', 'Bug']
       }
-    ]
+    ],
+    ticketMakingForm: false,
+    containerHovered: false
   }
 ])
 
@@ -114,6 +121,30 @@ const onDrop = (event, targetSet) => {
   const target = ticketsSetsData.value.find((column) => column.name === targetSet)
   target.tickets.push(ticket)
 }
+
+const addTicketToData = (data) => {
+  // console.log(data)
+  const ticketSet = ticketsSetsData.value.find((item) => item.id == data.ticketSetToBeAdded)
+  ticketSet.tickets.push(data)
+  ticketSet.ticketMakingForm = false
+}
+
+const displayTicketMakerBtn = (ticketSetId) => {
+  const ticketSet = ticketsSetsData.value.find((item) => item.id == ticketSetId)
+  if (!ticketSet.ticketMakingForm) {
+    ticketSet.containerHovered = true
+  }
+}
+
+const openTicketMakerForm = (ticketSetId) => {
+  const ticketSet = ticketsSetsData.value.find((item) => item.id == ticketSetId)
+  ticketSet.containerHovered = false
+  ticketSet.ticketMakingForm = true
+}
+
+const closeNewTicketForm = (id) => {
+  ticketsSetsData.value.find((item) => item.id === id).ticketMakingForm = false
+}
 </script>
 
 <template>
@@ -125,9 +156,25 @@ const onDrop = (event, targetSet) => {
       class="specific-ticket-container"
       @dragover.prevent
       @drop="onDrop($event, ticketSet.name)"
+      @mouseenter="displayTicketMakerBtn(ticketSet.id)"
+      @mouseleave="ticketSet.containerHovered = false"
     >
       <h3 class="ticket-container-title">{{ ticketSet.name }}</h3>
-      <NewTicketMaker :ticketsSetsData="ticketsSetsData" :ticketSetId="ticketSet.id" />
+      <div
+        class="new-ticket-creator"
+        v-show="ticketSet.containerHovered"
+        @click="openTicketMakerForm(ticketSet.id)"
+      >
+        <h3>New Ticket</h3>
+        <span>+</span>
+      </div>
+      <NewTicketMaker
+        v-if="ticketSet.ticketMakingForm"
+        :ticketsSetsData="ticketsSetsData"
+        :ticketSetId="ticketSet.id"
+        @new-ticket="addTicketToData"
+        @close-form="closeNewTicketForm"
+      />
       <div
         v-for="ticket in ticketSet.tickets"
         :key="ticket.id"
@@ -178,6 +225,9 @@ const onDrop = (event, targetSet) => {
   text-transform: uppercase;
   padding: 15px 20px;
 }
+.ticket-details:first-of-type {
+  margin-top: 0px;
+}
 .ticket-details {
   width: 100%;
   height: fit-content;
@@ -211,5 +261,25 @@ const onDrop = (event, targetSet) => {
   margin-top: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+.new-ticket-creator {
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #fff;
+  border: 1px solid #00000030;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.new-ticket-creator h3 {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.new-ticket-creator span {
+  font-size: 24px;
 }
 </style>

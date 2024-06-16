@@ -1,54 +1,68 @@
 <script setup>
-import { ref, onMounted, defineProps } from 'vue'
+import { ref, onMounted, defineProps, defineEmits } from 'vue'
 
+// import { useEmit } from 'vue'
 const props = defineProps({
   ticketsSetsData: Array,
   ticketSetId: Number
 })
+const emit = defineEmits(['new-ticket', 'close-form'])
 
 const newTicketData = ref({
-  id: 0,
+  id: '',
   content: '',
   tags: [],
   ticketSetToBeAdded: props.ticketSetId
 })
 
 onMounted(() => {
+  let value = 0
   props.ticketsSetsData.forEach((item) => {
-    newTicketData.value.id += item.tickets.length
+    value += item.tickets.length
   })
+  newTicketData.value.id = `ticket-${value}`
 })
 
 const addTags = (e) => {
-  if (e.target.value !== '') {
-    newTicketData.value.tags.push(e.target.value)
-    e.target.value = ''
+  const tag = e.target.value.trim()
+  if (tag && !newTicketData.value.tags.includes(tag) && tag !== '') {
+    newTicketData.value.tags.push(tag)
+  }
+  e.target.value = ''
+}
+
+const onSubmitTicket = () => {
+  console.log(newTicketData.value)
+  if (newTicketData.value.content && newTicketData.value.tags) {
+    emit('new-ticket', newTicketData.value)
   }
 }
 </script>
 
 <template>
-  <form @submit.prevent class="ticket-details form-to-new-ticket">
+  <form @submit.prevent="onSubmitTicket" class="ticket-details form-to-new-ticket">
     <textarea
       name="content"
       v-model="newTicketData.content"
       autofocus
       placeholder="Enter issue ..."
     ></textarea>
-    <div class="ticket-tags">
+    <div class="ticket-tags" v-if="newTicketData.tags.length !== 0">
       <span v-for="(tag, index) in newTicketData.tags" :key="index">{{ tag }}</span>
     </div>
-    <input type="text" name="tags" placeholder="tags." @keyup.enter="addTags" />
+    <input type="text" name="tags" placeholder="Enter tags" @keydown.enter.stop.prevent="addTags" />
 
     <p class="ticket-id">ticket-{{ newTicketData.id }}</p>
+    <button class="new-ticket-btn">Create ticket</button>
+    <button class="close-form-btn" @click.stop.prevent="$emit('close-form', ticketSetId)">x</button>
   </form>
-  <!-- {{ newTicketData }} -->
 </template>
 
 <style>
-.ticket-details.form-to-new-ticket{
-    margin-top: 0px;
-    cursor: pointer;
+.ticket-details.form-to-new-ticket {
+  margin-bottom: 10px;
+
+  cursor: pointer;
 }
 
 .ticket-details input,
@@ -59,6 +73,7 @@ const addTags = (e) => {
   width: 100%;
   border: 0px;
   border-bottom: 0.5px solid #00000030;
+  border-radius: 2px;
 }
 .ticket-details input:focus,
 .ticket-details textarea:focus {
@@ -67,11 +82,29 @@ const addTags = (e) => {
   border-bottom: 0.5px solid #000000;
 }
 .ticket-details textarea {
-  overflow-x: hidden;
-  margin-top: 0px;
-  resize: vertical;
   min-height: 75px;
-  height: fit-content;
   max-height: 200px;
+  height: fit-content;
+  resize: vertical;
+  margin-top: 0px;
+  overflow-x: hidden;
+}
+.new-ticket-btn,
+.close-form-btn {
+  padding: 5px 10px;
+  /* border: 0px; */
+  background-color: var(--papaya-whip);
+  border: 1px solid #00000030;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.close-form-btn {
+  background: red;
+  color: white;
+  margin-left: 20px;
 }
 </style>
