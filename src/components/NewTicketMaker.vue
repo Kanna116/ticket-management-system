@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, defineProps, defineEmits } from 'vue'
+import { ref, defineProps, defineEmits, onUpdated } from 'vue'
 
 // import { useEmit } from 'vue'
 const props = defineProps({
@@ -15,8 +15,8 @@ const newTicketData = ref({
   ticketSetToBeAdded: props.ticketSetId
 })
 
-onMounted(() => {
-  let value = 0
+onUpdated(() => {
+  let value = 1
   props.ticketsSetsData.forEach((item) => {
     value += item.tickets.length
   })
@@ -32,7 +32,7 @@ const addTags = (e) => {
 }
 
 const onSubmitTicket = () => {
-  console.log(newTicketData.value)
+  // console.log(newTicketData.value)
   if (newTicketData.value.content && newTicketData.value.tags) {
     emit('new-ticket', newTicketData.value)
   }
@@ -52,7 +52,6 @@ const onSubmitTicket = () => {
     </div>
     <input type="text" name="tags" placeholder="Enter tags" @keydown.enter.stop.prevent="addTags" />
 
-    <p class="ticket-id">ticket-{{ newTicketData.id }}</p>
     <button class="new-ticket-btn">Create ticket</button>
     <button class="close-form-btn" @click.stop.prevent="$emit('close-form', ticketSetId)">x</button>
   </form>

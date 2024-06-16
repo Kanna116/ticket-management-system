@@ -162,7 +162,7 @@ const closeNewTicketForm = (id) => {
       <h3 class="ticket-container-title">{{ ticketSet.name }}</h3>
       <div
         class="new-ticket-creator"
-        v-show="ticketSet.containerHovered"
+        v-if="ticketSet.containerHovered"
         @click="openTicketMakerForm(ticketSet.id)"
       >
         <h3>New Ticket</h3>
@@ -265,14 +265,16 @@ const closeNewTicketForm = (id) => {
 .new-ticket-creator {
   width: 100%;
   padding: 5px 10px;
-  background-color: #fff;
-  border: 1px solid #00000030;
   margin-bottom: 10px;
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  transition: all 100ms ease;
+}
+.new-ticket-creator:hover {
+  background-color: #00000030;
 }
 .new-ticket-creator h3 {
   font-size: 14px;
@@ -280,6 +282,6 @@ const closeNewTicketForm = (id) => {
   text-transform: uppercase;
 }
 .new-ticket-creator span {
-  font-size: 24px;
+  font-size: 20px;
 }
 </style>
