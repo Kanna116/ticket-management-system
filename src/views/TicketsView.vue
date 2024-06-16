@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 // import TicketMakerModal from '../components/TicketMakerModal.vue'
+import NewTicketMaker from '../components/NewTicketMaker.vue'
 
 const ticketsSetsData = ref([
   {
@@ -126,6 +127,7 @@ const onDrop = (event, targetSet) => {
       @drop="onDrop($event, ticketSet.name)"
     >
       <h3 class="ticket-container-title">{{ ticketSet.name }}</h3>
+      <NewTicketMaker :ticketsSetsData="ticketsSetsData" :ticketSetId="ticketSet.id" />
       <div
         v-for="ticket in ticketSet.tickets"
         :key="ticket.id"
@@ -173,12 +175,8 @@ const onDrop = (event, targetSet) => {
   background-color: #f7f8f9;
   position: sticky;
   top: 0;
-  left: 0;
-  /* left: 0px; */
-
   text-transform: uppercase;
   padding: 15px 20px;
-  /* background-color: #fff; */
 }
 .ticket-details {
   width: 100%;
@@ -194,9 +192,6 @@ const onDrop = (event, targetSet) => {
 .ticket-details:active {
   cursor: grabbing;
   opacity: 0.8;
-}
-.ticket-details:first-of-type {
-  margin-top: 0px;
 }
 .ticket-tags {
   margin-top: 10px;
