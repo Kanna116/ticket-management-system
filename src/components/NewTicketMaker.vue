@@ -37,6 +37,10 @@ const onSubmitTicket = () => {
     emit('new-ticket', newTicketData.value)
   }
 }
+
+const removeTags = (tag) => {
+  newTicketData.value.tags = newTicketData.value.tags.filter((item) => item !== tag)
+}
 </script>
 
 <template>
@@ -48,7 +52,9 @@ const onSubmitTicket = () => {
       placeholder="Enter issue ..."
     ></textarea>
     <div class="ticket-tags" v-if="newTicketData.tags.length !== 0">
-      <span v-for="(tag, index) in newTicketData.tags" :key="index">{{ tag }}</span>
+      <span v-for="(tag, index) in newTicketData.tags" :key="index"
+        >{{ tag }} <button class="tag-remove-btn" @click.stop.prevent="removeTags(tag)">x</button></span
+      >
     </div>
     <input type="text" name="tags" placeholder="Enter tags" @keydown.enter.stop.prevent="addTags" />
 
@@ -90,7 +96,7 @@ const onSubmitTicket = () => {
 }
 .new-ticket-btn,
 .close-form-btn {
-  padding: 5px 10px;
+  padding: 10px;
   /* border: 0px; */
   background-color: var(--papaya-whip);
   border: 1px solid #00000030;
@@ -105,5 +111,10 @@ const onSubmitTicket = () => {
   background: red;
   color: white;
   margin-left: 20px;
+}
+.tag-remove-btn{
+  border: 0px;
+  color: red;
+  margin-left: 10px
 }
 </style>
