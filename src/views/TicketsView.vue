@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import TicketMakerModal from '../components/TicketMakerModal.vue'
+// import TicketMakerModal from '../components/TicketMakerModal.vue'
 
 const ticketsSetsData = ref([
   {
@@ -12,6 +12,24 @@ const ticketsSetsData = ref([
         content:
           'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
         tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-2',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-3',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-4',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
       }
     ]
   },
@@ -20,7 +38,25 @@ const ticketsSetsData = ref([
     name: 'In Progress',
     tickets: [
       {
-        id: 'ticket-2',
+        id: 'ticket-5',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-6',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-7',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-8',
         content:
           'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
         tags: ['Enhancement', 'Bug']
@@ -30,7 +66,32 @@ const ticketsSetsData = ref([
   {
     id: 3,
     name: 'Done',
-    tickets: []
+    tickets: [
+      {
+        id: 'ticket-9',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-10',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-11',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      },
+      {
+        id: 'ticket-12',
+        content:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
+        tags: ['Enhancement', 'Bug']
+      }
+    ]
   }
 ])
 
@@ -79,7 +140,7 @@ const onDrop = (event, targetSet) => {
         <p class="ticket-id">{{ ticket.id }}</p>
       </div>
     </div>
-    <TicketMakerModal />
+    <!-- <TicketMakerModal /> -->
   </div>
 </template>
 
@@ -96,22 +157,28 @@ const onDrop = (event, targetSet) => {
 }
 .specific-ticket-container {
   width: 300px;
-  height: 100%;
-  min-height: 80vh;
+  /* height: 100%; */
+  height: 80vh;
   background-color: #f7f8f9;
-  padding: 55px 10px 0px;
+  padding: 0px 10px 20px;
   position: relative;
   border-radius: 5px;
+  overflow: auto;
+  position: relative;
 }
 .ticket-container-title {
   width: 100%;
   font-size: 12px;
   font-weight: 600;
-  position: absolute;
+  background-color: #f7f8f9;
+  position: sticky;
   top: 0;
   left: 0;
+  /* left: 0px; */
+
   text-transform: uppercase;
   padding: 15px 20px;
+  /* background-color: #fff; */
 }
 .ticket-details {
   width: 100%;

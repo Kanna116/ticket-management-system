@@ -6,9 +6,33 @@
   padding: 20px;
   font-weight: normal;
 }
+
 body {
   padding-left: 250px;
 }
 
-@media (min-width: 1024px) {
+
+body {
+  --sb-track-color: #f7f8f9;
+  --sb-thumb-color: #000;
+  --sb-size: 5px;
 }
+
+::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 3px;
+
+}
+
+
+
+@media (min-width: 1024px) {}
