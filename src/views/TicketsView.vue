@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-// import TicketMakerModal from '../components/TicketMakerModal.vue'
+import TicketDisplayModal from '../components/TicketDisplayModal.vue'
 import NewTicketMaker from '../components/NewTicketMaker.vue'
 
 // const containerHovered = ref(false)
@@ -189,7 +189,7 @@ const closeNewTicketForm = (id) => {
         <p class="ticket-id">{{ ticket.id }}</p>
       </div>
     </div>
-    <!-- <TicketMakerModal /> -->
+    <TicketDisplayModal />
   </div>
 </template>
 
@@ -223,7 +223,7 @@ const closeNewTicketForm = (id) => {
   position: sticky;
   top: 0;
   text-transform: uppercase;
-  padding: 15px 20px;
+  padding: 15px 10px;
 }
 .ticket-details:first-of-type {
   margin-top: 0px;
