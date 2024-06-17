@@ -1,8 +1,12 @@
 <script setup>
-import { ref } from 'vue'
-import TicketDisplayModal from '../components/TicketDisplayModal.vue'
-import NewTicketMaker from '../components/NewTicketMaker.vue'
+import { defineAsyncComponent, ref } from 'vue'
+// import TicketDisplayModal from '../components/TicketDisplayModal.vue'
+// import NewTicketMaker from '../components/NewTicketMaker.vue'
 
+const TicketDisplayModal = defineAsyncComponent(
+  () => import('../components/TicketDisplayModal.vue')
+)
+const NewTicketMaker = defineAsyncComponent(() => import('../components/NewTicketMaker.vue'))
 // const containerHovered = ref(false)
 const ticketsSetsData = ref([
   {
@@ -11,27 +15,63 @@ const ticketsSetsData = ref([
     tickets: [
       {
         id: 'ticket-1',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Initial Setup',
+        description: 'Set up the initial project structure and repository.',
+        status: 'not-started',
+        priority: 'high',
+        type: 'Task',
+        assignee: 68,
+        reporter: 49,
+        project_id: 67,
+        created_at: 1718287572,
+        updated_at: 1718287572,
+        due_date: 1718287572,
+        tags: ['Setup', 'Project']
       },
       {
         id: 'ticket-2',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Create Wireframes',
+        description: 'Design wireframes for the main pages.',
+        status: 'not-started',
+        priority: 'medium',
+        type: 'Design',
+        assignee: 70,
+        reporter: 51,
+        project_id: 67,
+        created_at: 1718288572,
+        updated_at: 1718288572,
+        due_date: 1718297572,
+        tags: ['Design', 'UI']
       },
       {
         id: 'ticket-3',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Research Competitors',
+        description: 'Conduct a competitive analysis of similar products.',
+        status: 'not-started',
+        priority: 'low',
+        type: 'Research',
+        assignee: 72,
+        reporter: 53,
+        project_id: 67,
+        created_at: 1718289572,
+        updated_at: 1718289572,
+        due_date: 1718307572,
+        tags: ['Research', 'Market']
       },
       {
         id: 'ticket-4',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Set Up CI/CD',
+        description: 'Implement Continuous Integration and Continuous Deployment.',
+        status: 'not-started',
+        priority: 'extreme',
+        type: 'DevOps',
+        assignee: 74,
+        reporter: 55,
+        project_id: 67,
+        created_at: 1718290572,
+        updated_at: 1718290572,
+        due_date: 1718317572,
+        tags: ['DevOps', 'Automation']
       }
     ],
     ticketMakingForm: false,
@@ -43,27 +83,63 @@ const ticketsSetsData = ref([
     tickets: [
       {
         id: 'ticket-5',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Develop Login Module',
+        description: 'Create login and authentication module.',
+        status: 'in-progress',
+        priority: 'high',
+        type: 'Feature',
+        assignee: 68,
+        reporter: 49,
+        project_id: 67,
+        created_at: 1718291572,
+        updated_at: 1718291572,
+        due_date: 1718327572,
+        tags: ['Feature', 'Authentication']
       },
       {
         id: 'ticket-6',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Create Dashboard UI',
+        description: 'Develop the user interface for the dashboard.',
+        status: 'in-progress',
+        priority: 'medium',
+        type: 'UI',
+        assignee: 70,
+        reporter: 51,
+        project_id: 67,
+        created_at: 1718292572,
+        updated_at: 1718292572,
+        due_date: 1718337572,
+        tags: ['UI', 'Dashboard']
       },
       {
         id: 'ticket-7',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Implement User Roles',
+        description: 'Set up user roles and permissions.',
+        status: 'in-progress',
+        priority: 'extreme',
+        type: 'Security',
+        assignee: 72,
+        reporter: 53,
+        project_id: 67,
+        created_at: 1718293572,
+        updated_at: 1718293572,
+        due_date: 1718347572,
+        tags: ['Security', 'Roles']
       },
       {
         id: 'ticket-8',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'API Integration',
+        description: 'Integrate with external APIs for data fetching.',
+        status: 'in-progress',
+        priority: 'high',
+        type: 'Backend',
+        assignee: 74,
+        reporter: 55,
+        project_id: 67,
+        created_at: 1718294572,
+        updated_at: 1718294572,
+        due_date: 1718357572,
+        tags: ['API', 'Backend']
       }
     ],
     ticketMakingForm: false,
@@ -75,33 +151,74 @@ const ticketsSetsData = ref([
     tickets: [
       {
         id: 'ticket-9',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Setup Development Environment',
+        description: 'Install and configure development tools.',
+        status: 'done',
+        priority: 'medium',
+        type: 'Setup',
+        assignee: 68,
+        reporter: 49,
+        project_id: 67,
+        created_at: 1718295572,
+        updated_at: 1718295572,
+        due_date: 1718367572,
+        tags: ['Setup', 'Environment']
       },
       {
         id: 'ticket-10',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Design Logo',
+        description: 'Create a logo for the project.',
+        status: 'done',
+        priority: 'low',
+        type: 'Design',
+        assignee: 70,
+        reporter: 51,
+        project_id: 67,
+        created_at: 1718296572,
+        updated_at: 1718296572,
+        due_date: 1718377572,
+        tags: ['Design', 'Logo']
       },
       {
         id: 'ticket-11',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'User Research',
+        description: 'Conduct user interviews to gather requirements.',
+        status: 'done',
+        priority: 'high',
+        type: 'Research',
+        assignee: 72,
+        reporter: 53,
+        project_id: 67,
+        created_at: 1718297572,
+        updated_at: 1718297572,
+        due_date: 1718387572,
+        tags: ['Research', 'User']
       },
       {
         id: 'ticket-12',
-        content:
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et',
-        tags: ['Enhancement', 'Bug']
+        title: 'Setup Staging Environment',
+        description: 'Prepare a staging environment for testing.',
+        status: 'done',
+        priority: 'extreme',
+        type: 'DevOps',
+        assignee: 74,
+        reporter: 55,
+        project_id: 67,
+        created_at: 1718298572,
+        updated_at: 1718298572,
+        due_date: 1718397572,
+        tags: ['DevOps', 'Staging']
       }
     ],
     ticketMakingForm: false,
     containerHovered: false
   }
 ])
+
+const isModalOpen = ref({
+  openOrNot: false,
+  data: null
+})
 
 // with this method I can get the event to store the transfer data, and ticket and current set name of ticket
 const onDragStart = (event, ticket, ticketSet) => {
@@ -145,6 +262,11 @@ const openTicketMakerForm = (ticketSetId) => {
 const closeNewTicketForm = (id) => {
   ticketsSetsData.value.find((item) => item.id === id).ticketMakingForm = false
 }
+
+const openModel = (data) => {
+  isModalOpen.value.openOrNot = true
+  isModalOpen.value.data = data
+}
 </script>
 
 <template>
@@ -181,15 +303,20 @@ const closeNewTicketForm = (id) => {
         class="ticket-details"
         draggable="true"
         @dragstart="onDragStart($event, ticket, ticketSet.name)"
+        @click="openModel(ticket)"
       >
-        <p>{{ ticket.content }}</p>
+        <p>{{ ticket.title }}</p>
         <div class="ticket-tags">
           <span v-for="tag in ticket.tags" :key="tag">{{ tag }}</span>
         </div>
         <p class="ticket-id">{{ ticket.id }}</p>
       </div>
     </div>
-    <TicketDisplayModal />
+    <TicketDisplayModal
+      v-if="isModalOpen.openOrNot"
+      @close-modal="isModalOpen.openOrNot = false"
+      :ticketData="isModalOpen.data"
+    />
   </div>
 </template>
 

@@ -1,27 +1,36 @@
+<script setup>
+import { defineProps } from 'vue'
+const props = defineProps({
+  ticketData: Object
+})
+console.log(props.ticketData)
+</script>
+
 <template>
   <div class="modal-screen">
     <div class="ticket-details-title">
-      <p class="ticket-id">{{ 'TICKET - 12' }}</p>
-      <button>X</button>
+      <p class="ticket-id">{{ ticketData.id }}</p>
+      <button @click="$emit('close-modal')">x</button>
     </div>
     <div class="ticket-container">
       <div class="ticket-left">
         <h2 class="ticket-main-title">
-          {{
-            'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta, tempore facilis accusamus ex rerum ullam temporibus et'
-          }}
+          {{ ticketData.title }}
         </h2>
         <div class="ticket-desc-container">
           <h4>Description</h4>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, eum incidunt dolores vitae
-            odit dolore voluptatum voluptas modi voluptates, assumenda unde maxime magnam!
-            Repellendus, dolor quia quidem qui animi nemo?
+            {{ ticketData.description }}
           </p>
         </div>
       </div>
       <div class="ticket-right">
-        <select name="status-options" id="status-options" class="status-options-container">
+        <select
+          name="status-options"
+          id="status-options"
+          :value="ticketData.status"
+          class="status-options-container"
+        >
           <option value="not-started">Not-Started</option>
           <option value="in-progress">In-Progress</option>
           <option value="done">Done</option>
@@ -31,7 +40,7 @@
           <h3>Details</h3>
           <div class="two-column-grid">
             <h4>Assignee</h4>
-            <p>{{ 'murali krishna' }}</p>
+            <p>{{ ticketData.assignee }}</p>
             <h4>Tags</h4>
             <div class="ticket-tags">
               <span>bug</span>
@@ -39,21 +48,24 @@
               <span>functionality</span>
             </div>
             <h4>Priority</h4>
-            <select name="priority-options" class="priority-options" id="priority-options">
+            <select
+              name="priority-options"
+              class="priority-options"
+              id="priority-options"
+              :value="ticketData.priority"
+            >
               <option value="low">low</option>
               <option value="high">High</option>
               <option value="extreme">Extreme</option>
             </select>
             <h4>Reporter</h4>
-            <p>{{ 'Klaxe' }}</p>
+            <p>{{ ticketData.reporter }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script></script>
 
 <style>
 .modal-screen {
