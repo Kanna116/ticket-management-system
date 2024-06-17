@@ -7,7 +7,6 @@ const TicketDisplayModal = defineAsyncComponent(
   () => import('../components/TicketDisplayModal.vue')
 )
 const NewTicketMaker = defineAsyncComponent(() => import('../components/NewTicketMaker.vue'))
-// const containerHovered = ref(false)
 const ticketsSetsData = ref([
   {
     id: 1,
@@ -258,7 +257,17 @@ const displayTicketMakerBtn = (ticketSetId) => {
 }
 
 const openTicketMakerForm = (ticketSetId) => {
-  const ticketSet = ticketsSetsData.value.find((item) => item.id == ticketSetId)
+  let ticketSet = null
+
+  ticketsSetsData.value.forEach((item) => {
+    if (item.id === ticketSetId) {
+      ticketSet = item
+    } else {
+      item.containerHovered = false
+      item.ticketMakingForm = false
+    }
+  })
+
   ticketSet.containerHovered = false
   ticketSet.ticketMakingForm = true
 }
@@ -287,21 +296,6 @@ const openModel = (data) => {
     >
       <h3 class="ticket-container-title">{{ ticketSet.name }}</h3>
       <div
-        class="new-ticket-creator"
-        v-if="ticketSet.containerHovered"
-        @click="openTicketMakerForm(ticketSet.id)"
-      >
-        <h3>New Ticket</h3>
-        <span>+</span>
-      </div>
-      <NewTicketMaker
-        v-if="ticketSet.ticketMakingForm"
-        :ticketsSetsData="ticketsSetsData"
-        :ticketSetId="ticketSet.id"
-        @new-ticket="addTicketToData"
-        @close-form="closeNewTicketForm"
-      />
-      <div
         v-for="ticket in ticketSet.tickets"
         :key="ticket.id"
         class="ticket-details"
@@ -315,6 +309,22 @@ const openModel = (data) => {
         </div>
         <p class="ticket-id">{{ ticket.id }}</p>
       </div>
+      <NewTicketMaker
+        v-if="ticketSet.ticketMakingForm"
+        :ticketsSetsData="ticketsSetsData"
+        :ticketSetId="ticketSet.id"
+        @new-ticket="addTicketToData"
+        @close-form="closeNewTicketForm"
+      />
+      <div
+        class="new-ticket-creator"
+        v-show="ticketSet.containerHovered"
+        @click="openTicketMakerForm(ticketSet.id)"
+      >
+        <h3>New Ticket</h3>
+        <span>+</span>
+      </div>
+      <div class="dummy-space"></div>
     </div>
     <TicketDisplayModal
       v-if="isModalOpen.openOrNot"
@@ -396,7 +406,7 @@ const openModel = (data) => {
 .new-ticket-creator {
   width: 100%;
   padding: 5px 10px;
-  margin-bottom: 10px;
+  margin-top: 10px;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -414,5 +424,9 @@ const openModel = (data) => {
 }
 .new-ticket-creator span {
   font-size: 20px;
+}
+.dummy-space {
+  width: 100%;
+  height: 30vh;
 }
 </style>

@@ -7,8 +7,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['new-ticket', 'close-form'])
 
-console.log(props.ticketsSetsData)
-console.log(props.ticketSetId)
+// console.log(props.ticketsSetsData)
+// console.log(props.ticketSetId)
 
 const newTicketData = ref({
   id: '',
@@ -82,7 +82,7 @@ const removeTags = (tag) => {
 
 <style>
 .ticket-details.form-to-new-ticket {
-  margin-bottom: 10px;
+  margin-top: 10px;
   cursor: pointer;
 }
 
