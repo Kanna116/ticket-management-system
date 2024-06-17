@@ -239,6 +239,7 @@ const onDrop = (event, targetSet) => {
 
   //adding the item after droping from the different  set
   const target = ticketsSetsData.value.find((column) => column.name === targetSet)
+  ticket.status = target.status
   target.tickets.push(ticket)
 }
 
