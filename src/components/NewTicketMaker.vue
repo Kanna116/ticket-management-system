@@ -1,18 +1,30 @@
 <script setup>
 import { ref, defineProps, defineEmits, onUpdated } from 'vue'
 
-// import { useEmit } from 'vue'
 const props = defineProps({
   ticketsSetsData: Array,
   ticketSetId: Number
 })
 const emit = defineEmits(['new-ticket', 'close-form'])
 
+console.log(props.ticketsSetsData)
+console.log(props.ticketSetId)
+
 const newTicketData = ref({
   id: '',
-  content: '',
+  title: '',
   tags: [],
-  ticketSetToBeAdded: props.ticketSetId
+  ticketSetToBeAdded: props.ticketSetId,
+  status: props.ticketsSetsData[props.ticketSetId - 1].status,
+  description: '',
+  priority: 'low',
+  type: '',
+  assignee: null,
+  reporter: null,
+  project_id: 67,
+  created_at: null,
+  updated_at: null,
+  due_date: null
 })
 
 onUpdated(() => {
@@ -21,6 +33,10 @@ onUpdated(() => {
     value += item.tickets.length
   })
   newTicketData.value.id = `ticket-${value}`
+  const date = new Date()
+  newTicketData.value.created_at = date
+  newTicketData.value.updated_at = date
+  newTicketData.value.due_date = date
 })
 
 const addTags = (e) => {
@@ -33,7 +49,7 @@ const addTags = (e) => {
 
 const onSubmitTicket = () => {
   // console.log(newTicketData.value)
-  if (newTicketData.value.content && newTicketData.value.tags) {
+  if (newTicketData.value.title && newTicketData.value.tags) {
     emit('new-ticket', newTicketData.value)
   }
 }
@@ -46,14 +62,15 @@ const removeTags = (tag) => {
 <template>
   <form @submit.prevent="onSubmitTicket" class="ticket-details form-to-new-ticket">
     <textarea
-      name="content"
-      v-model="newTicketData.content"
+      name="title"
+      v-model="newTicketData.title"
       autofocus
       placeholder="Enter issue ..."
     ></textarea>
     <div class="ticket-tags" v-if="newTicketData.tags.length !== 0">
       <span v-for="(tag, index) in newTicketData.tags" :key="index"
-        >{{ tag }} <button class="tag-remove-btn" @click.stop.prevent="removeTags(tag)">x</button></span
+        >{{ tag }}
+        <button class="tag-remove-btn" @click.stop.prevent="removeTags(tag)">x</button></span
       >
     </div>
     <input type="text" name="tags" placeholder="Enter tags" @keydown.enter.stop.prevent="addTags" />
@@ -66,7 +83,6 @@ const removeTags = (tag) => {
 <style>
 .ticket-details.form-to-new-ticket {
   margin-bottom: 10px;
-
   cursor: pointer;
 }
 
@@ -112,9 +128,9 @@ const removeTags = (tag) => {
   color: white;
   margin-left: 20px;
 }
-.tag-remove-btn{
+.tag-remove-btn {
   border: 0px;
   color: red;
-  margin-left: 10px
+  margin-left: 10px;
 }
 </style>

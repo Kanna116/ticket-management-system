@@ -12,6 +12,7 @@ const ticketsSetsData = ref([
   {
     id: 1,
     name: 'Not started',
+    status: 'not-started',
     tickets: [
       {
         id: 'ticket-1',
@@ -80,6 +81,7 @@ const ticketsSetsData = ref([
   {
     id: 2,
     name: 'In Progress',
+    status: 'in-progress',
     tickets: [
       {
         id: 'ticket-5',
@@ -148,6 +150,7 @@ const ticketsSetsData = ref([
   {
     id: 3,
     name: 'Done',
+    status: 'done',
     tickets: [
       {
         id: 'ticket-9',
