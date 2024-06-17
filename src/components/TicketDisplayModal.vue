@@ -3,7 +3,7 @@ import { defineProps } from 'vue'
 const props = defineProps({
   ticketData: Object
 })
-console.log(props.ticketData)
+// console.log(props.ticketData)
 </script>
 
 <template>
@@ -43,9 +43,7 @@ console.log(props.ticketData)
             <p>{{ ticketData.assignee }}</p>
             <h4>Tags</h4>
             <div class="ticket-tags">
-              <span>bug</span>
-              <span>enhancement</span>
-              <span>functionality</span>
+              <span v-for="(tag, index) in ticketData.tags" :key="index">{{ tag }}</span>
             </div>
             <h4>Priority</h4>
             <select
@@ -60,6 +58,12 @@ console.log(props.ticketData)
             </select>
             <h4>Reporter</h4>
             <p>{{ ticketData.reporter }}</p>
+            <h4>Created At</h4>
+            <p>{{ new Date(ticketData.created_at) }}</p>
+            <h4>Updated At</h4>
+            <p>{{ new Date(ticketData.updated_at) }}</p>
+            <h4>Due Date</h4>
+            <p>{{ new Date(ticketData.due_date) }}</p>
           </div>
         </div>
       </div>
@@ -99,9 +103,16 @@ console.log(props.ticketData)
 .ticket-details-title button {
   border: 0px;
   outline: 0px;
-  padding: 10px 15px;
-  background-color: #00000050;
+  padding: 5px 12px;
+  background-color: #fff;
   border-radius: 3px;
+  border: 0.5px solid #00000050;
+  font-size: 20px;
+  transition: all 100ms ease;
+}
+.ticket-details-title button:hover {
+  background-color: #000000;
+  color: white;
 }
 .ticket-container {
   width: 80vw;
@@ -164,20 +175,22 @@ console.log(props.ticketData)
 
 .ticket-details-extra {
   width: 100%;
-  height: fit-content;
+  height: 80%;
   margin-top: 20px;
   border: 0.5px solid #00000020;
   border-radius: 5px;
-}
-.ticket-details-extra {
+  overflow: auto;
   font-size: 16px;
   padding: 0px 0px 30px;
+  position: relative;
 }
 .ticket-details-extra h3 {
+  position: sticky;
+  top: 0px;
   font-size: 16px;
   font-weight: 500;
   padding: 10px 20px;
-  background-color: #00000020;
+  background-color: #747474;
   text-transform: capitalize;
 }
 .ticket-details-extra .two-column-grid {
