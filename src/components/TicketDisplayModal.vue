@@ -182,7 +182,6 @@ const props = defineProps({
   overflow: auto;
   font-size: 16px;
   padding: 0px 0px 30px;
-  position: relative;
 }
 .ticket-details-extra h3 {
   position: sticky;
@@ -190,7 +189,7 @@ const props = defineProps({
   font-size: 16px;
   font-weight: 500;
   padding: 10px 20px;
-  background-color: #747474;
+  background-color: #dfdfdf;
   text-transform: capitalize;
 }
 .ticket-details-extra .two-column-grid {
@@ -199,8 +198,7 @@ const props = defineProps({
   display: grid;
   grid-template-columns: 30% 65%;
   align-items: center;
-  row-gap: 10px;
-  column-gap: 10px;
+  gap: 10px;
 }
 .priority-options {
   padding: 5px 10px;

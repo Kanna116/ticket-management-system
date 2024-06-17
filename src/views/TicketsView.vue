@@ -393,7 +393,8 @@ const openModel = (data) => {
   gap: 10px;
 }
 .ticket-tags span {
-  padding: 2px 5px;
+  padding: 2px 10px;
+  font-size: 12px;
   background-color: #f7f8f9;
   border: 0.5px solid #00000030;
   border-radius: 3px;
