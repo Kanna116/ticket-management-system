@@ -14,13 +14,13 @@ const isModalOpen = ref({
 })
 
 // with this method I can get the event to store the transfer data, and ticket and current set name of ticket
-const onDragStart = (event, ticket, ticketSet) => {
-  event.dataTransfer.setData('ticket', JSON.stringify({ ticket, ticketSet }))
+const onDragStart = (event, ticket) => {
+  event.dataTransfer.setData('ticket', JSON.stringify(ticket))
 }
 
 //this will add the droped item to the dropped set
 const onDrop = (event, newStatus) => {
-  const { ticket, ticketSet } = JSON.parse(event.dataTransfer.getData('ticket'))
+  const ticket = JSON.parse(event.dataTransfer.getData('ticket'))
   updateTicketStatus(ticket.id, newStatus)
 }
 
@@ -55,7 +55,7 @@ const openModel = (data) => {
         :key="ticket.id"
         class="ticket-details"
         draggable="true"
-        @dragstart="onDragStart($event, ticket, ticketSet.name)"
+        @dragstart="onDragStart($event, ticket)"
         @click="openModel(ticket)"
       >
         <p>{{ ticket.title }}</p>
@@ -71,7 +71,7 @@ const openModel = (data) => {
       />
       <div
         class="new-ticket-creator"
-        v-show="ticketSet.containerHovered"
+        v-if="ticketSet.containerHovered"
         @click="toggleForm('open', ticketSet.id)"
       >
         <h3>New Ticket</h3>
