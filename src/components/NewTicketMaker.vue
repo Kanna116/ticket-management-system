@@ -1,42 +1,18 @@
 <script setup>
-import { ref, defineProps, defineEmits, onUpdated } from 'vue'
+import { ref, defineProps, onUpdated } from 'vue'
+import { useTicketStore } from '../stores/ticketStore'
 
 const props = defineProps({
   ticketsSetsData: Array,
   ticketSetId: Number
 })
-const emit = defineEmits(['new-ticket', 'close-form'])
 
-// console.log(props.ticketsSetsData)
-// console.log(props.ticketSetId)
+const { addNewTicket, toggleForm } = useTicketStore()
 
 const newTicketData = ref({
-  id: '',
   title: '',
   tags: [],
-  ticketSetToBeAdded: props.ticketSetId,
-  status: props.ticketsSetsData[props.ticketSetId - 1].status,
-  description: '',
-  priority: 'low',
-  type: '',
-  assignee: null,
-  reporter: null,
-  project_id: 67,
-  created_at: null,
-  updated_at: null,
-  due_date: null
-})
-
-onUpdated(() => {
-  let value = 1
-  props.ticketsSetsData.forEach((item) => {
-    value += item.tickets.length
-  })
-  newTicketData.value.id = `ticket-${value}`
-  const date = new Date()
-  newTicketData.value.created_at = date
-  newTicketData.value.updated_at = date
-  newTicketData.value.due_date = date
+  status: props.ticketsSetsData[props.ticketSetId - 1].status
 })
 
 const addTags = (e) => {
@@ -46,16 +22,12 @@ const addTags = (e) => {
   }
   e.target.value = ''
 }
-
-const onSubmitTicket = () => {
-  // console.log(newTicketData.value)
-  if (newTicketData.value.title && newTicketData.value.tags) {
-    emit('new-ticket', newTicketData.value)
-  }
-}
-
 const removeTags = (tag) => {
   newTicketData.value.tags = newTicketData.value.tags.filter((item) => item !== tag)
+}
+
+const onSubmitTicket = () => {
+  addNewTicket(newTicketData.value)
 }
 </script>
 
@@ -76,7 +48,7 @@ const removeTags = (tag) => {
     <input type="text" name="tags" placeholder="Enter tags" @keydown.enter.stop.prevent="addTags" />
 
     <button class="new-ticket-btn">Create ticket</button>
-    <button class="close-form-btn" @click.stop.prevent="$emit('close-form', ticketSetId)">x</button>
+    <button class="close-form-btn" @click.stop.prevent="toggleForm('close', ticketSetId)">x</button>
   </form>
 </template>
 
@@ -95,6 +67,7 @@ const removeTags = (tag) => {
   border: 0px;
   border-bottom: 0.5px solid #00000030;
   border-radius: 2px;
+  font-family: inherit;
 }
 .ticket-details input:focus,
 .ticket-details textarea:focus {

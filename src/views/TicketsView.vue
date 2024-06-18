@@ -216,7 +216,8 @@ const NewTicketMaker = defineAsyncComponent(() => import('../components/NewTicke
 //   }
 // ])
 
-const { ticketsSetsData } = useTicketStore()
+const { ticketsSetsData, toggleForm } = useTicketStore()
+
 const isModalOpen = ref({
   openOrNot: false,
   data: null
@@ -242,12 +243,12 @@ const onDrop = (event, targetSet) => {
   target.tickets.push(ticket)
 }
 
-const addTicketToData = (data) => {
-  // console.log(data)
-  const ticketSet = ticketsSetsData.find((item) => item.id == data.ticketSetToBeAdded)
-  ticketSet.tickets.push(data)
-  ticketSet.ticketMakingForm = false
-}
+// const addTicketToData = (data) => {
+//   // console.log(data)
+//   const ticketSet = ticketsSetsData.find((item) => item.id == data.ticketSetToBeAdded)
+//   ticketSet.tickets.push(data)
+//   ticketSet.ticketMakingForm = false
+// }
 
 const displayTicketMakerBtn = (ticketSetId) => {
   const ticketSet = ticketsSetsData.find((item) => item.id == ticketSetId)
@@ -272,9 +273,9 @@ const openTicketMakerForm = (ticketSetId) => {
   ticketSet.ticketMakingForm = true
 }
 
-const closeNewTicketForm = (id) => {
-  ticketsSetsData.find((item) => item.id === id).ticketMakingForm = false
-}
+// const closeNewTicketForm = (id) => {
+//   ticketsSetsData.find((item) => item.id === id).ticketMakingForm = false
+// }
 
 const openModel = (data) => {
   isModalOpen.value.openOrNot = true
@@ -313,13 +314,11 @@ const openModel = (data) => {
         v-if="ticketSet.ticketMakingForm"
         :ticketsSetsData="ticketsSetsData"
         :ticketSetId="ticketSet.id"
-        @new-ticket="addTicketToData"
-        @close-form="closeNewTicketForm"
       />
       <div
         class="new-ticket-creator"
         v-show="ticketSet.containerHovered"
-        @click="openTicketMakerForm(ticketSet.id)"
+        @click="toggleForm('open', ticketSet.id)"
       >
         <h3>New Ticket</h3>
         <span>+</span>
