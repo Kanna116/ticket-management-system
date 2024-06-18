@@ -9,7 +9,7 @@ const props = defineProps({
 <template>
   <div class="modal-screen">
     <div class="ticket-details-title">
-      <p class="ticket-id">{{ ticketData.id }}</p>
+      <p class="ticket-id">ticket-{{ ticketData.id }}</p>
       <button @click="$emit('close-modal')">x</button>
     </div>
     <div class="ticket-container">
@@ -147,6 +147,7 @@ const props = defineProps({
   font-weight: 600;
 }
 .ticket-desc-container p {
+  width: 75%;
   font-size: 14px;
   margin-top: 10px;
   font-weight: 500;

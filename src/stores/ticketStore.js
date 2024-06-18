@@ -79,7 +79,8 @@ export const useTicketStore = defineStore('tickets', () => {
     await fetch(`https://666af5457013419182d1a490.mockapi.io/api/tickets/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
-        status: newStatus
+        status: newStatus,
+        updated_at: new Date()
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8'

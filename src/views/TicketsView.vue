@@ -62,7 +62,7 @@ const openModel = (data) => {
         <div class="ticket-tags">
           <span v-for="tag in ticket.tags" :key="tag">{{ tag }}</span>
         </div>
-        <p class="ticket-id">{{ ticket.id }}</p>
+        <p class="ticket-id">ticket-{{ ticket.id }}</p>
       </div>
       <NewTicketMaker
         v-if="ticketSet.ticketMakingForm"
@@ -153,9 +153,10 @@ const openModel = (data) => {
   border-radius: 3px;
 }
 .ticket-id {
-  margin-top: 10px;
+  margin-top: 15px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 .new-ticket-creator {
   width: 100%;
