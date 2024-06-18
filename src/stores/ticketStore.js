@@ -75,11 +75,28 @@ export const useTicketStore = defineStore('tickets', () => {
       })
   }
 
+  const updateTicketStatus = async (id, newStatus) => {
+    await fetch(`https://666af5457013419182d1a490.mockapi.io/api/tickets/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        status: newStatus
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    })
+      .then((res) => res.json())
+      .then(() => {
+        fetchAllTickets()
+      })
+  }
+
   const structorizeTickets = () => {
     //as I am using push method to sort the tickets first I will clear it and push with the fresh tickets
     //this is to resolve the problem when creating a new ticket
     ticketsSetsData.value.forEach((item) => (item.tickets = []))
 
+    //if i use filter method and make adding it will be 90 above executions for 30 data now this will loop only 30 times
     tickets.value.forEach((ticket) => {
       ticketsSetsData.value.forEach((set) => {
         if (set.status === ticket.status) {
@@ -89,6 +106,7 @@ export const useTicketStore = defineStore('tickets', () => {
     })
   }
 
+  //able to open the quick form to add new ticket in ticket view page
   const toggleForm = (task, id) => {
     ticketsSetsData.value.forEach((item) => {
       if (task === 'open') {
@@ -108,6 +126,7 @@ export const useTicketStore = defineStore('tickets', () => {
     tickets,
     ticketsSetsData,
     addNewTicket,
-    toggleForm
+    toggleForm,
+    updateTicketStatus
   }
 })
